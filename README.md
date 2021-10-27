@@ -1,5 +1,5 @@
 # openshift-s2i-php
-PHP Hello World Demo page for Red Hat OpenShift S2I
+PHP Hello World Demo page for Red Hat OpenShift S2I using [CI/CD](https://cloud.redhat.com/learn/topics/ci-cd) ([Red Hat OpenShift Pipelines](https://docs.openshift.com/container-platform/latest/cicd/pipelines/understanding-openshift-pipelines.html)).
 
 ## Prerequisites
 
