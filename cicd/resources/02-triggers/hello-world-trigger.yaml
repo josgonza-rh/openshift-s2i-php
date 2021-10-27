@@ -39,7 +39,7 @@ spec:
         name: build-and-deploy-hello-world-app
       params:
       - name: APP_NAME
-        value: $(tt.params.deployment-name)<
+        value: $(tt.params.deployment-name)
       - name: GIT_REPO
         value: $(tt.params.git-repo-url)
       - name: GIT_REVISION
