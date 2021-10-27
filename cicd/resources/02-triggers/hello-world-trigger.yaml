@@ -1,0 +1,98 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: hello-world-app
+spec:
+  params:
+  - name: git-repo-url
+    value: $(body.repository.url)
+  - name: git-repo-name
+    value: $(body.repository.name)
+  - name: git-revision
+    value: $(body.head_commit.id)
+
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: Trigger
+metadata:
+  name: hello-world-trigger
+spec:
+  serviceAccountName: pipeline
+  bindings:
+    - ref: hello-world-app
+  template:
+    ref: hello-world-app
+
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: hello-world-app
+spec:
+  params:
+  - name: git-repo-url
+    description: The git repository url
+  - name: git-revision
+    description: The git revision
+    default: main
+  - name: deployment-name
+    description: The name of the deployment to be created / patched
+    default: hello-world
+
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: build-deploy-$(tt.params.deployment-name)-
+    spec:
+      serviceAccountName: pipeline
+      pipelineRef:
+        name: build-and-deploy-hello-world-app
+      params:
+      - name: APP_NAME
+        value: $(tt.params.deployment-name)
+      - name: GIT_REPO
+        value: $(tt.params.git-repo-url)
+      - name: GIT_REVISION
+        value: $(tt.params.git-revision)
+      - name: IMAGE_NAME
+        value: image-registry.openshift-image-registry.svc:5000/$(context.pipelineRun.namespace)/$(tt.params.deployment-name)
+      - name: PATH_CONTEXT
+        value: .
+      - name: VERSION
+        value: 7.4-ubi8
+      workspaces:
+      - name: workspace
+        volumeClaimTemplate:
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 500Mi
+                
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: Trigger
+metadata:
+  name: hello-world-trigger
+spec:
+  serviceAccountName: pipeline
+  bindings:
+    - ref: hello-world-app
+  template:
+    ref: hello-world-app
+
+---
+
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: hello-world-app
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - triggerRef: hello-world-trigger
