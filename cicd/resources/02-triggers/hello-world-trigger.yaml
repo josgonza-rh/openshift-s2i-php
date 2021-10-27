@@ -14,19 +14,6 @@ spec:
 ---
 
 apiVersion: triggers.tekton.dev/v1alpha1
-kind: Trigger
-metadata:
-  name: hello-world-trigger
-spec:
-  serviceAccountName: pipeline
-  bindings:
-    - ref: hello-world-app
-  template:
-    ref: hello-world-app
-
----
-
-apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
   name: hello-world-app
@@ -52,7 +39,7 @@ spec:
         name: build-and-deploy-hello-world-app
       params:
       - name: APP_NAME
-        value: $(tt.params.deployment-name)
+        value: $(tt.params.deployment-name)<
       - name: GIT_REPO
         value: $(tt.params.git-repo-url)
       - name: GIT_REVISION
