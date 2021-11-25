@@ -50,7 +50,7 @@ PHP Hello World Demo page for Red Hat OpenShift S2I using [CI/CD](https://cloud.
     * From command line:
 
         ```bash
-        oc create -f https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/4.8-0.24.3/cicd/resources/01-pipelines/hello-world-pipeline.yaml
+        oc create -f https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/main/cicd/resources/01-pipelines/hello-world-pipeline.yaml
         ```
 
 4. Running the Pipeline
