@@ -67,12 +67,7 @@ spec:
     - name: deploy
       params:
         - name: SCRIPT
-          value: kubectl $@
-        - name: ARGS
-          value:
-            - rollout
-            - status
-            - deploy/$(params.APP_NAME)
+          value: oc rollout status deploy/$(params.APP_NAME)
       runAfter:
         - build
       taskRef:
