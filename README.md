@@ -50,7 +50,7 @@ PHP Hello World Demo page for Red Hat OpenShift S2I using [CI/CD](https://cloud.
     * From command line:
 
         ```bash
-        oc create -f https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/main/cicd/resources/01-pipelines/hello-world-pipeline.yaml
+        oc create -f https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/4.7/cicd/resources/01-pipelines/hello-world-pipeline.yaml
         ```
 
 4. Running the Pipeline
@@ -62,9 +62,9 @@ PHP Hello World Demo page for Red Hat OpenShift S2I using [CI/CD](https://cloud.
     * From command line:
 
         ```bash
-        tkn pipeline start build-and-deploy-hello-world-app -w name=workspace,volumeClaimTemplateFile=https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/main/cicd/resources/00-worspaces/hello-world-workspace.yaml -p GIT_REPO=https://github.com/josgonza-rh/openshift-s2i-php
-
+        tkn pipeline start build-and-deploy-hello-world-app -w name=workspace,volumeClaimTemplateFile=https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/4.7/cicd/resources/00-worspaces/hello-world-workspace.yaml -p GIT_REPO=https://github.com/josgonza-rh/openshift-s2i-php
         ```
+
     > ![NOTE](images/info-icon.png) **NOTE**: A `PipelineRun` resource starts a pipeline and ties it to the Git and image resources that should be used for the specific invocation. It automatically creates and starts the `TaskRun` resources for each task in the pipeline.
 
 ### Triggers and Webhook
@@ -80,7 +80,7 @@ Triggers enable pipelines to respond to external GitHub events, such as push eve
     * From command line:
 
         ```bash
-        oc create -f https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/main/cicd/resources/02-triggers/hello-world-trigger.yaml
+        oc create -f https://raw.githubusercontent.com/josgonza-rh/openshift-s2i-php/4.7/cicd/resources/02-triggers/hello-world-trigger.yaml
         ```
 
 2. Expose the `EventListener` service as an OpenShift Container Platform route to make it publicly accessible:
